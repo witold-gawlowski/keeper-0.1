@@ -12,7 +12,7 @@ public class DragScript : MonoBehaviour
     public float maxSpeed = 5;
     void OnBlockPressedDown()
     {
-        Collider2D col = Physics2D.OverlapPoint(mousePos);
+        Collider2D col = Physics2D.OverlapPoint(mousePos, LayerMask.GetMask("Block"));
         draggedBlock = col.transform.GetComponentInParent<BlockScript>();
         gripShift = draggedBlock.transform.position - mousePos;
     }
