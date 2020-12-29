@@ -62,7 +62,7 @@ public class SnappingScript : MonoBehaviour
         List<BlockScript> blocks = BlockManager.instance.Blocks;
         foreach(BlockScript b in blocks)
         {
-            if (b != block)
+            if (b != null && b != block)
             {
                 foreach (Transform t in b.transform)
                 {

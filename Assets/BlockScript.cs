@@ -1,10 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockScript : MonoBehaviour
 {
     public GameObject spritesObject;
+    private BlockScript snappedBlock;
+    public BlockScript SnappedBlock
+    {
+        get { return snappedBlock; }
+    }
     public void ResetTilePositions()
     {
         foreach(Transform t in transform)
@@ -14,18 +20,30 @@ public class BlockScript : MonoBehaviour
             t.localPosition = newPos;
         }
     }
-    public void Snap(GameObject linkerA, GameObject linkerB)
+    public void Snap(GameObject childLinker, GameObject otherLinker)
     {
+        snappedBlock = otherLinker.GetComponentInParent<BlockScript>();
         spritesObject.transform.parent = null;
-        spritesObject.transform.position = linkerB.transform.position - (linkerA.transform.position-linkerA.transform.parent.position);
+        Vector3 childLinkerRelativePosition = (childLinker.transform.position - childLinker.transform.parent.position);
+        spritesObject.transform.position = otherLinker.transform.position - childLinkerRelativePosition;
     }
     public void UnSnap()
     {
+        snappedBlock = null;
         spritesObject.transform.parent = this.transform;
         spritesObject.transform.localPosition = Vector3.zero;
     }
     public void Rotate()
     {
         transform.Rotate(Vector3.forward, 90);
+    }
+    public void Join()
+    {
+        foreach(Transform t in snappedBlock.transform)
+        {
+            t.parent = transform;
+        }
+        snappedBlock.spritesObject.transform.parent = spritesObject.transform;
+        Destroy(SnappedBlock.gameObject);
     }
 }

@@ -18,14 +18,16 @@ public class DragScript : MonoBehaviour
     {
         get { return draggedBlock; }
     }
-    void OnBlockPressedDown()
+    void OnMouseDown()
     {
         lastBlockPressedDownTime = Time.time;
         Collider2D col = Physics2D.OverlapPoint(mousePos, LayerMask.GetMask("Block"));
-        draggedBlock = col.transform.GetComponentInParent<BlockScript>();
-        gripShift = draggedBlock.transform.position - mousePos;
-
-        SnappingScript.instance.OnDragStart(draggedBlock);
+        if (col != null)
+        {
+            draggedBlock = col.transform.GetComponentInParent<BlockScript>();
+            gripShift = draggedBlock.transform.position - mousePos;
+            SnappingScript.instance.OnDragStart(draggedBlock);
+        }
     }
     void OnBlockHeld()
     {
@@ -33,9 +35,13 @@ public class DragScript : MonoBehaviour
     }
     void OnBlockReleased()
     {
-        if (Time.time - lastBlockPressedDownTime < 0.2f)
+        if (Time.time - lastBlockPressedDownTime < 0.1f)
         {
             draggedBlock.Rotate();
+        }
+        if (draggedBlock.SnappedBlock != null)
+        {
+            draggedBlock.Join();
         }
         draggedBlock = null;
     }
@@ -47,7 +53,7 @@ public class DragScript : MonoBehaviour
             mousePos.z = 0;
             if (Input.GetMouseButtonDown(0))
             {
-                OnBlockPressedDown();
+                OnMouseDown();
             }
             if (draggedBlock)
             {
