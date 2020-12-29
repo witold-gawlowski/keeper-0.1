@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class SnappingScript : MonoBehaviour
 {
-    List<GameObject> draggedLinkers;
-    List<GameObject> otherLinkers;
+    public static SnappingScript instance;
     public float snappingDistance = 1.0f;
 
     float minDistance;
-    GameObject aLinker, bLinker;
+    GameObject linkerA, linkerB;
+    List<GameObject> draggedLinkers;
+    List<GameObject> otherLinkers;
     private void FixedUpdate()
     {
+        minDistance = 1000;
         foreach(GameObject a in draggedLinkers)
         {
             foreach(GameObject b in otherLinkers)
@@ -19,11 +21,19 @@ public class SnappingScript : MonoBehaviour
                 Vector3 abVector = a.transform.position - b.transform.position;
                 if(abVector.magnitude < minDistance)
                 {
-                    aLinker = a;
-                    bLinker = b;
+                    linkerA = a;
+                    linkerB = b;
                     minDistance = abVector.magnitude;
                 }
             }
+        }
+        if (minDistance < snappingDistance)
+        {
+            DragScript.instance.DraggedBlock.Snap(linkerA, linkerB);
+        }
+        else
+        {
+            DragScript.instance.DraggedBlock.UnSnap();
         }
     }
     public void OnDragStart(BlockScript block)
@@ -50,5 +60,9 @@ public class SnappingScript : MonoBehaviour
                 }
             }
         }
+    }
+    private void Awake()
+    {
+        instance = this;
     }
 }

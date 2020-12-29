@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class DragScript : MonoBehaviour
 {
+    public static DragScript instance;
+
     BlockScript draggedBlock;
     Vector3 gripShift;
     Vector3 shift = Vector3.up * 3.0f;
     Vector3 targetPos;
     Vector3 mousePos;
     public float maxSpeed = 5;
+    public BlockScript DraggedBlock
+    {
+        get { return draggedBlock; }
+    }
     void OnBlockPressedDown()
     {
         Collider2D col = Physics2D.OverlapPoint(mousePos, LayerMask.GetMask("Block"));
         draggedBlock = col.transform.GetComponentInParent<BlockScript>();
         gripShift = draggedBlock.transform.position - mousePos;
+
+        SnappingScript.instance.OnDragStart(draggedBlock);
     }
     void OnBlockHeld()
     {
         targetPos = new Vector3(mousePos.x, mousePos.y, 0) + shift + gripShift;
+    }
+    void OnBlockReleased()
+    {
+
     }
     void Update()
     {
@@ -39,6 +51,7 @@ public class DragScript : MonoBehaviour
             if (draggedBlock)
             {
                 draggedBlock = null;
+                OnBlockReleased();
             }
         }
     }
@@ -53,5 +66,9 @@ public class DragScript : MonoBehaviour
             }
             draggedBlock.transform.position += positionDelta;
         }
+    }
+    private void Awake()
+    {
+        instance = this;   
     }
 }
