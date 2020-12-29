@@ -12,6 +12,7 @@ public class BlockManager : MonoBehaviour
     }
     private void Awake()
     {
-        instance = this;   
+        instance = this;
+        blocks = new List<BlockScript>(FindObjectsOfType<BlockScript>());
     }
 }

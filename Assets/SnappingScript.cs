@@ -9,17 +9,24 @@ public class SnappingScript : MonoBehaviour
 
     float minDistance;
     GameObject linkerA, linkerB;
-    List<GameObject> draggedLinkers;
-    List<GameObject> otherLinkers;
+    public List<GameObject> draggedLinkers;
+    public List<GameObject> otherLinkers;
     private void FixedUpdate()
     {
-        minDistance = 1000;
-        foreach(GameObject a in draggedLinkers)
+        if (DragScript.instance.DraggedBlock != null)
         {
-            foreach(GameObject b in otherLinkers)
+            OnDrag();
+        }
+    }
+    private void OnDrag()
+    {
+        minDistance = 1000;
+        foreach (GameObject a in draggedLinkers)
+        {
+            foreach (GameObject b in otherLinkers)
             {
                 Vector3 abVector = a.transform.position - b.transform.position;
-                if(abVector.magnitude < minDistance)
+                if (abVector.magnitude < minDistance)
                 {
                     linkerA = a;
                     linkerB = b;
@@ -49,14 +56,17 @@ public class SnappingScript : MonoBehaviour
             }
         }
 
-        List<BlockScript> otherBlocks = BlockManager.instance.Blocks;
-        foreach(BlockScript b in otherBlocks)
+        List<BlockScript> blocks = BlockManager.instance.Blocks;
+        foreach(BlockScript b in blocks)
         {
-            foreach(Transform t in b.transform)
+            if (b != block)
             {
-                if (t.CompareTag("Linker"))
+                foreach (Transform t in b.transform)
                 {
-                    otherLinkers.Add(t.gameObject);
+                    if (t.CompareTag("Linker"))
+                    {
+                        otherLinkers.Add(t.gameObject);
+                    }
                 }
             }
         }

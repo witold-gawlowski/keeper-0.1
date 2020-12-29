@@ -37,6 +37,7 @@ public class DragScript : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = 0;
             if (Input.GetMouseButtonDown(0))
             {
                 OnBlockPressedDown();
