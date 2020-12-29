@@ -5,19 +5,22 @@ using UnityEngine;
 public class DragScript : MonoBehaviour
 {
     public static DragScript instance;
+    public float maxSpeed = 5;
 
     BlockScript draggedBlock;
     Vector3 gripShift;
     Vector3 shift = Vector3.up * 3.0f;
     Vector3 targetPos;
     Vector3 mousePos;
-    public float maxSpeed = 5;
+    float lastBlockPressedDownTime;
+
     public BlockScript DraggedBlock
     {
         get { return draggedBlock; }
     }
     void OnBlockPressedDown()
     {
+        lastBlockPressedDownTime = Time.time;
         Collider2D col = Physics2D.OverlapPoint(mousePos, LayerMask.GetMask("Block"));
         draggedBlock = col.transform.GetComponentInParent<BlockScript>();
         gripShift = draggedBlock.transform.position - mousePos;
@@ -30,7 +33,11 @@ public class DragScript : MonoBehaviour
     }
     void OnBlockReleased()
     {
-
+        if (Time.time - lastBlockPressedDownTime < 0.2f)
+        {
+            draggedBlock.Rotate();
+        }
+        draggedBlock = null;
     }
     void Update()
     {
@@ -51,7 +58,6 @@ public class DragScript : MonoBehaviour
         {
             if (draggedBlock)
             {
-                draggedBlock = null;
                 OnBlockReleased();
             }
         }

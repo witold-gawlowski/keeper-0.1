@@ -17,11 +17,15 @@ public class BlockScript : MonoBehaviour
     public void Snap(GameObject linkerA, GameObject linkerB)
     {
         spritesObject.transform.parent = null;
-        spritesObject.transform.position = linkerB.transform.position - linkerA.transform.localPosition;
+        spritesObject.transform.position = linkerB.transform.position - (linkerA.transform.position-linkerA.transform.parent.position);
     }
     public void UnSnap()
     {
         spritesObject.transform.parent = this.transform;
         spritesObject.transform.localPosition = Vector3.zero;
+    }
+    public void Rotate()
+    {
+        transform.Rotate(Vector3.forward, 90);
     }
 }

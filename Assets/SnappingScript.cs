@@ -25,12 +25,15 @@ public class SnappingScript : MonoBehaviour
         {
             foreach (GameObject b in otherLinkers)
             {
-                Vector3 abVector = a.transform.position - b.transform.position;
-                if (abVector.magnitude < minDistance)
+                if (Mathf.Abs(Mathf.Abs(a.transform.eulerAngles.z - b.transform.eulerAngles.z) - 180) < 5.0f)
                 {
-                    linkerA = a;
-                    linkerB = b;
-                    minDistance = abVector.magnitude;
+                    Vector3 abVector = a.transform.position - b.transform.position;
+                    if (abVector.magnitude < minDistance)
+                    {
+                        linkerA = a;
+                        linkerB = b;
+                        minDistance = abVector.magnitude;
+                    }
                 }
             }
         }
