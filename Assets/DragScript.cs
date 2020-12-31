@@ -28,6 +28,10 @@ public class DragScript : MonoBehaviour
             gripShift = draggedBlock.transform.position - mousePos;
             SnappingScript.instance.OnDragStart(draggedBlock);
         }
+        else
+        {
+            BlockManager.instance.Spawn(mousePos);
+        }
     }
     void OnBlockHeld()
     {

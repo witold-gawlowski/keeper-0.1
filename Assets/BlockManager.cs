@@ -5,14 +5,35 @@ using UnityEngine;
 public class BlockManager : MonoBehaviour
 {
     public static BlockManager instance;
-    List<BlockScript> blocks;
-    public List<BlockScript> Blocks
+    List<BlockScript> livingBlocks;
+    List<BlockScript> pool;
+    public List<BlockScript> LivingBlocks
     {
-        get { return blocks; }
+        get { return livingBlocks; }
+    }
+    public void Spawn(Vector3 position)
+    {
+        if (pool.Count != 0)
+        {
+            BlockScript spawnedBlock = pool[0];
+            pool.RemoveAt(0);
+            livingBlocks.Add(spawnedBlock);
+            spawnedBlock.transform.position = position;
+        }
     }
     private void Awake()
     {
         instance = this;
-        blocks = new List<BlockScript>(FindObjectsOfType<BlockScript>());
+        pool = new List<BlockScript>();
+        livingBlocks = new List<BlockScript>();
+        foreach (Inventory.Item item in Inventory.instance.contents)
+        {
+            for (int i = 0; i < item.count; i++)
+            {
+                GameObject newBlock = Instantiate(item.prefab, Vector3.one*100, Quaternion.identity);
+                BlockScript newBlockScript = newBlock.GetComponent<BlockScript>();
+                pool.Add(newBlockScript);
+            }
+        }
     }
 }

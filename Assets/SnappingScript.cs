@@ -59,7 +59,7 @@ public class SnappingScript : MonoBehaviour
             }
         }
 
-        List<BlockScript> blocks = BlockManager.instance.Blocks;
+        List<BlockScript> blocks = BlockManager.instance.LivingBlocks;
         foreach(BlockScript b in blocks)
         {
             if (b != null && b != block)

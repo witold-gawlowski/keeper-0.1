@@ -7,6 +7,12 @@ public class BlockScript : MonoBehaviour
 {
     public GameObject spritesObject;
     private BlockScript snappedBlock;
+    [SerializeField]
+    private List<string> blockNames;
+    public List<string> BlockNames
+    {
+        get { return blockNames; }
+    }
     public BlockScript SnappedBlock
     {
         get { return snappedBlock; }
@@ -44,6 +50,7 @@ public class BlockScript : MonoBehaviour
             t.parent = transform;
         }
         snappedBlock.spritesObject.transform.parent = spritesObject.transform;
+        blockNames.AddRange(snappedBlock.BlockNames);
         Destroy(SnappedBlock.gameObject);
     }
 }
