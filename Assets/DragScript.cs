@@ -47,6 +47,10 @@ public class DragScript : MonoBehaviour
         {
             draggedBlock.Join();
         }
+        if (GameplayUI.instance.IsOverUI(mousePos))
+        {
+
+        }
         draggedBlock = null;
     }
     void Update()
