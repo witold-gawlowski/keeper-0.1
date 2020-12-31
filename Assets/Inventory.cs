@@ -17,4 +17,16 @@ public class Inventory : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(gameObject);
     }
+    public GameObject GetBlockPrefab(string name)
+    {
+        foreach(Item item in contents)
+        {
+            BlockScript blockScript = item.prefab.GetComponent<BlockScript>();
+            if (blockScript.BlockNames[0].Equals(name))
+            {
+                return item.prefab;
+            }
+        }
+        return null;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,6 +22,12 @@ public class BlockManager : MonoBehaviour
             spawnedBlock.transform.position = position;
         }
     }
+    void CreatePoolBlock(GameObject blockPrefab)
+    {
+        GameObject newBlock = Instantiate(blockPrefab, Vector3.one * 100, Quaternion.identity);
+        BlockScript newBlockScript = newBlock.GetComponent<BlockScript>();
+        pool.Add(newBlockScript);
+    }
     private void Awake()
     {
         instance = this;
@@ -30,10 +37,18 @@ public class BlockManager : MonoBehaviour
         {
             for (int i = 0; i < item.count; i++)
             {
-                GameObject newBlock = Instantiate(item.prefab, Vector3.one*100, Quaternion.identity);
-                BlockScript newBlockScript = newBlock.GetComponent<BlockScript>();
-                pool.Add(newBlockScript);
+                CreatePoolBlock(item.prefab);
             }
         }
+    }
+
+    public void Remove(BlockScript draggedBlock)
+    {
+        foreach(String blockName in draggedBlock.BlockNames)
+        {
+            GameObject blockPrefab = Inventory.instance.GetBlockPrefab(blockName);
+           CreatePoolBlock(blockPrefab);
+        }
+        Destroy(draggedBlock.gameObject);
     }
 }

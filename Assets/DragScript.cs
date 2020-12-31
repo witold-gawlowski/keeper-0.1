@@ -27,6 +27,7 @@ public class DragScript : MonoBehaviour
             draggedBlock = col.transform.GetComponentInParent<BlockScript>();
             gripShift = draggedBlock.transform.position - mousePos;
             SnappingScript.instance.OnDragStart(draggedBlock);
+            GameplayUI.instance.SetRemoveImageEnabled(true);
         }
         else
         {
@@ -39,18 +40,19 @@ public class DragScript : MonoBehaviour
     }
     void OnBlockReleased()
     {
-        if (Time.time - lastBlockPressedDownTime < 0.1f)
-        {
-            draggedBlock.Rotate();
-        }
         if (draggedBlock.SnappedBlock != null)
         {
             draggedBlock.Join();
         }
-        if (GameplayUI.instance.IsOverUI(mousePos))
+        else if (Time.time - lastBlockPressedDownTime < 0.1f)
         {
-
+            draggedBlock.Rotate();
         }
+        else if (GameplayUI.instance.IsOverUI(mousePos))
+        {
+            BlockManager.instance.Remove(draggedBlock);
+        }
+        GameplayUI.instance.SetRemoveImageEnabled(false);
         draggedBlock = null;
     }
     void Update()

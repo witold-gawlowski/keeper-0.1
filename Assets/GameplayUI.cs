@@ -6,11 +6,16 @@ using UnityEngine.UI;
 public class GameplayUI : MonoBehaviour
 {
     public static GameplayUI instance;
+    public Image removeImage;
     GraphicRaycaster gr;
     private void Awake()
     {
         instance = this;
         gr = GetComponent<GraphicRaycaster>();
+    }
+    public void SetRemoveImageEnabled(bool value)
+    {
+        removeImage.enabled = value;
     }
     public bool IsOverUI(Vector3 position)
     {
@@ -18,10 +23,6 @@ public class GameplayUI : MonoBehaviour
         PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
         eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         gr.Raycast(eventDataCurrentPosition, results);
-        foreach (RaycastResult result in results)
-        {
-            Debug.Log("Hit " + result.gameObject.name);
-        }
         return results.Count > 0;
     }
 }
