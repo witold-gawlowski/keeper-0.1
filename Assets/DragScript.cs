@@ -40,7 +40,7 @@ public class DragScript : MonoBehaviour
     }
     void OnBlockReleased()
     {
-        if (draggedBlock.SnappedBlock != null)
+        if (draggedBlock.IsSnapped())
         {
             draggedBlock.Join();
         }

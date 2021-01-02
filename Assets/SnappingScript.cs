@@ -51,7 +51,7 @@ public class SnappingScript : MonoBehaviour
         draggedLinkers = new List<GameObject>();
         otherLinkers = new List<GameObject>();
 
-        foreach(Transform t in block.transform)
+        foreach(Transform t in block.tilesParent.transform)
         {
             if(t.CompareTag("Linker"))
             {
@@ -64,7 +64,7 @@ public class SnappingScript : MonoBehaviour
         {
             if (b != null && b != block)
             {
-                foreach (Transform t in b.transform)
+                foreach (Transform t in b.tilesParent.transform)
                 {
                     if (t.CompareTag("Linker"))
                     {
