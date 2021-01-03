@@ -7,6 +7,7 @@ public class BlockScript : MonoBehaviour
 {
     public GameObject spritesObject;
     public GameObject tilesParent;
+    public GameObject tilePrefab;
     private GameObject childLinker;
     private GameObject otherLinker;
     [SerializeField]
@@ -61,5 +62,26 @@ public class BlockScript : MonoBehaviour
         }
         blockNames.AddRange(snappedBlock.BlockNames);
         Destroy(snappedBlock.gameObject);
+
+        GameObject newTile = Instantiate(tilePrefab, childLinker.transform.position, Quaternion.identity);
+        Destroy(childLinker);
+        Destroy(otherLinker);
+    }
+
+    public bool IsColliding(GameObject childLinker, GameObject otherLinker)
+    {
+        Vector3 linkerDiff = otherLinker.transform.position - childLinker.transform.position;
+       foreach(Transform childTile in tilesParent.transform)
+       {
+            foreach(Transform othersTile in otherLinker.transform.parent.transform)
+            {
+
+                if(diff.magnitude < 0.1f)
+                {
+                    return true;
+                }
+            }
+       }
+        return false;
     }
 }

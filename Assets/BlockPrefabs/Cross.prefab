@@ -104,6 +104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritesObject: {fileID: 438218985422964253}
   tilesParent: {fileID: 3479578976226047368}
+  tilePrefab: {fileID: 0}
   blockNames:
   - Cross
   ChildLinker: {fileID: 0}
