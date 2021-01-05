@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 438218983795765758}
   m_Layer: 8
   m_Name: Tile (3)
-  m_TagString: Linker
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,7 +104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritesObject: {fileID: 438218985422964253}
   tilesParent: {fileID: 3479578976226047368}
-  tilePrefab: {fileID: 0}
+  tilePrefab: {fileID: 19289994098800701, guid: ca820c73b14756e4db0aa6cf71e978aa,
+    type: 3}
   blockNames:
   - Cross
   ChildLinker: {fileID: 0}

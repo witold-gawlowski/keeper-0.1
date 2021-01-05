@@ -327,9 +327,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contents:
   - prefab: {fileID: 438218983823720723, guid: e67085d14a67d52488e24d05a577d661, type: 3}
-    count: 1
+    count: 5
   - prefab: {fileID: 990896511927266512, guid: d561b9898cd6d3d40ba71229a69461a6, type: 3}
-    count: 2
+    count: 5
 --- !u!4 &1070818478
 Transform:
   m_ObjectHideFlags: 0

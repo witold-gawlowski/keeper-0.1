@@ -39,7 +39,7 @@ public class SnappingScript : MonoBehaviour
         }
         if (minDistance < snappingDistance)
         {
-            DragScript.instance.DraggedBlock.Snap(linkerA, linkerB);
+            DragScript.instance.DraggedBlock.TrySnap(linkerA, linkerB);
         }
         else
         {

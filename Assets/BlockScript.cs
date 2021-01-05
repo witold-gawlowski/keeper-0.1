@@ -31,13 +31,21 @@ public class BlockScript : MonoBehaviour
             t.localPosition = newPos;
         }
     }
-    public void Snap(GameObject childLinker, GameObject otherLinker)
+    public void Snap()
     {
-        this.childLinker = childLinker;
-        this.otherLinker = otherLinker;
         spritesObject.transform.parent = null;
         Vector3 childLinkerRelativePosition = (childLinker.transform.position - childLinker.transform.parent.position);
         spritesObject.transform.position = otherLinker.transform.position - childLinkerRelativePosition;
+    }
+    public void TrySnap(GameObject childLinker, GameObject otherLinker)
+    {
+        this.childLinker = childLinker;
+        this.otherLinker = otherLinker;
+        bool collidng = IsColliding(childLinker, otherLinker);
+        if (!collidng)
+        {
+            Snap();
+        }
     }
     public void UnSnap()
     {
@@ -70,15 +78,18 @@ public class BlockScript : MonoBehaviour
 
     public bool IsColliding(GameObject childLinker, GameObject otherLinker)
     {
-        Vector3 linkerDiff = otherLinker.transform.position - childLinker.transform.position;
+       Vector3 linkerDiff = otherLinker.transform.position - childLinker.transform.position;
        foreach(Transform childTile in tilesParent.transform)
        {
-            foreach(Transform othersTile in otherLinker.transform.parent.transform)
+            foreach (Transform othersTile in otherLinker.transform.parent.transform)
             {
-
-                if(diff.magnitude < 0.1f)
+                Vector3 diff = childTile.transform.position - othersTile.transform.position + linkerDiff;
+                if (diff.magnitude < 0.1f)
                 {
-                    return true;
+                    if (childTile.tag != "Linker" || othersTile.tag != "Linker")
+                    {
+                        return true;
+                    }
                 }
             }
        }

@@ -356,6 +356,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spritesObject: {fileID: 990896511555935206}
   tilesParent: {fileID: 2344290911169036950}
+  tilePrefab: {fileID: 19289994098800701, guid: ca820c73b14756e4db0aa6cf71e978aa,
+    type: 3}
   blockNames:
   - Room
   ChildLinker: {fileID: 0}
