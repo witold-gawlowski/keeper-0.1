@@ -13,6 +13,7 @@ public class BlockScriptEditor: Editor
         if (GUILayout.Button("Reset Positions"))
         {
             myScript.ResetTilePositions();
+            EditorUtility.SetDirty(myScript);
         }
     }
 }

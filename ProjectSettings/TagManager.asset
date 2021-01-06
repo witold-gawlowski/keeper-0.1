@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Linker
   - Tile
+  - Blocker
   layers:
   - Default
   - TransparentFX

@@ -22,13 +22,17 @@ public class BlockScript : MonoBehaviour
     {
         return childLinker != null;
     }
+    private void SnapToGrid(Transform t)
+    {
+        Vector3 pos = t.localPosition;
+        Vector3 newPos = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y));
+        t.localPosition = newPos;
+    }
     public void ResetTilePositions()
     {
         foreach(Transform t in tilesParent.transform)
         {
-            Vector3 pos = t.localPosition;
-            Vector3 newPos = new Vector3(Mathf.Round(pos.x), Mathf.Round(pos.y));
-            t.localPosition = newPos;
+            SnapToGrid(t);
         }
     }
     public void Snap()
@@ -79,14 +83,16 @@ public class BlockScript : MonoBehaviour
     public bool IsColliding(GameObject childLinker, GameObject otherLinker)
     {
        Vector3 linkerDiff = otherLinker.transform.position - childLinker.transform.position;
+       BlockScript otherBlock = otherLinker.GetComponentInParent<BlockScript>();       
        foreach(Transform childTile in tilesParent.transform)
        {
             foreach (Transform othersTile in otherLinker.transform.parent.transform)
             {
-                Vector3 diff = childTile.transform.position - othersTile.transform.position + linkerDiff;
-                if (diff.magnitude < 0.1f)
-                {
-                    if (childTile.tag != "Linker" || othersTile.tag != "Linker")
+                bool blockers = childTile.tag == "Blocker" && othersTile.tag == "Blocker";
+                bool linkers = childTile.tag == "Linker" && othersTile.tag == "Linker";
+                if (!blockers && !linkers) {
+                    Vector3 diff = childTile.transform.position - othersTile.transform.position + linkerDiff;
+                    if (diff.magnitude < 0.1f)
                     {
                         return true;
                     }
@@ -94,5 +100,18 @@ public class BlockScript : MonoBehaviour
             }
        }
         return false;
+    }
+
+    void OnDrawGizmos()
+    {
+        foreach(Transform t in tilesParent.transform)
+        {
+            if (t.tag == "Blocker")
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireCube(t.position, new Vector3(1, 1, 0));
+            }
+        }
+
     }
 }
