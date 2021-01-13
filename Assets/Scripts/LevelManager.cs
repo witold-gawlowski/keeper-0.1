@@ -7,8 +7,8 @@ public class LevelManager : MonoBehaviour
     public class MapData
     {
         public List<string> blockTypes;
-        public List<int> blockCounts;
-        public GameObject mapPrefab;
+        public List<int> blockMultiplicities;
+        public MapScript mapScript;
         public int goal;
         public int limit;
     }
@@ -50,14 +50,14 @@ public class LevelManager : MonoBehaviour
             MapData newMap = new MapData();
             newMap.goal = GetRandomGoal();
             newMap.limit = FromDistribution(limitDistribution);
-            newMap.mapPrefab = MapDictionary.instance.GetRandomMap();
+            newMap.mapScript = MapDictionary.instance.GetRandomMap();
             newMap.blockTypes = new List<string>();
-            newMap.blockCounts = new List<int>();
+            newMap.blockMultiplicities = new List<int>();
             int blockTypeCount = FromDistribution(blockTypeCountDistribution);
             for (int j=0; j<blockTypeCount; j++)
             {
                 newMap.blockTypes.Add(BlockDictionary.instance.GetRandomBlock());
-                newMap.blockCounts.Add(FromDistribution(blockMultiplicityDistribution));
+                newMap.blockMultiplicities.Add(FromDistribution(blockMultiplicityDistribution));
             }
         }
     }

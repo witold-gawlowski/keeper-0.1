@@ -5,8 +5,8 @@ using UnityEngine;
 public class MapDictionary : MonoBehaviour
 {
     public static MapDictionary instance;
-    public List<GameObject> contents;
-    public GameObject GetRandomMap()
+    public List<MapScript> contents;
+    public MapScript GetRandomMap()
     {
         int levelNumber = contents.Count;
         int index = Random.Range(0, levelNumber);

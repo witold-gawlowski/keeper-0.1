@@ -278,7 +278,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 19289994098800701, guid: ca820c73b14756e4db0aa6cf71e978aa,
     type: 3}
   blockNames:
-  - Cross
+  - L
   ChildLinker: {fileID: 0}
   OtherLinker: {fileID: 0}
 --- !u!1 &1566810094656050451

@@ -18,6 +18,14 @@ public class BlockScript : MonoBehaviour
     }
     public GameObject ChildLinker;
     public GameObject OtherLinker;
+    public string GetName()
+    {
+        return blockNames[0];
+    }
+    public Sprite GetSprite()
+    {
+        throw new NotImplementedException();
+    }
     public bool IsSnapped()
     {
         return childLinker != null;
